@@ -4,11 +4,17 @@
 #
 # === Parameters
 #
-# [*sshd_config*]
-#   The path to the sshd configuration file. eg /etc/ssh/sshd_config
+# [*ssh_client_package*]
+#   The ssh client package name. eg openssh-clients
 #
-# [*ssh_authorized_keys*]
-#   The path to the authorized keys file. eg /root/.ssh/authorized_keys2
+# [*ssh_server_package*]
+#   The sshe server package name. eg openssh-server
+#
+# [*ssh_server_config*]
+#   The path to the ssh server configuration file. eg /etc/ssh/sshd_config
+#
+# [*ssh_server_service*]
+#   The ssh server service name. eg sshd
 #
 class ssh::params {
   case $operatingsystem {
