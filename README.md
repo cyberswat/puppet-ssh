@@ -43,14 +43,14 @@ Variables
 
 Examples
 -
-   class { 'ssh::config' :
+    class { 'ssh::config' :
       port => '1234',
       rsa_authentication => 'yes',
       pub_key_authentication => 'yes',
       authorized_keys_file => 'authorized_keys2',
       authorized_keys_parent => '/root/.ssh',
       authorized_keys => [$key1, $key2, $key3],
-   }
+    }
 
 Class: ssh::params
 =
