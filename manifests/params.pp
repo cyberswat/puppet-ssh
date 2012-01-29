@@ -1,4 +1,4 @@
-# == Class: ssh::parmas
+# == Class: ssh::params
 #
 # Declares and sets the parameters necessary for the ssh module.
 #
@@ -17,7 +17,6 @@ class ssh::params {
       $ssh_server_package = 'openssh-server'     
       $ssh_server_config = '/etc/ssh/sshd_config'
       $ssh_server_service = 'sshd'
-      $ssh_authorized_keys = '/root/.ssh/authorized_keys2'
     }
   }
 }

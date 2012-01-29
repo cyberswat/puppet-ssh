@@ -1,4 +1,2 @@
-<%= scope.function_header([File.mtime(__FILE__)]) %>
-<% authorized_keys.each do |val| -%>
-<%= val %>
+<%= scope.function_header([File.mtime(__FILE__)]) %><% authorized_keys.each do |key| -%><%= key %>
 <% end -%>

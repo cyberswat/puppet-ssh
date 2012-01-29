@@ -47,7 +47,7 @@ SyslogFacility AUTHPRIV
 
 RSAAuthentication <%= rsa_authentication %>
 PubkeyAuthentication <%= pub_key_authentication %>
-AuthorizedKeysFile	<%= authorized_keys_file %>
+AuthorizedKeysFile <%= authorized_keys_parent%>/<%= authorized_keys_file %>
 #AuthorizedKeysCommand none
 #AuthorizedKeysCommandRunAs nobody
 
@@ -64,7 +64,7 @@ AuthorizedKeysFile	<%= authorized_keys_file %>
 # To disable tunneled clear text passwords, change to no here!
 #PasswordAuthentication yes
 #PermitEmptyPasswords no
-PasswordAuthentication yes
+PasswordAuthentication no
 
 # Change to no to disable s/key passwords
 #ChallengeResponseAuthentication yes

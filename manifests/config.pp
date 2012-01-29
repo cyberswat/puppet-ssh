@@ -1,29 +1,61 @@
 # == Class: ssh::config
 #
-# Manages variables for both puppet client and puppet master.
+# Manages ssh(d).  The default configuration disables password based
+# authentication by requiring ssh keys to authenticate against port 22. Changing
+# to a non-standard port and using key based authentication as illustrated in
+# the example is suggested.
 #
 # === Variables
 #
-# [*puppetmaster*]
-#   The fully qualified name of the puppet master.  In the case of a
-#   puppet client the name will be the clients master otherwise it is
-#   the masters name.  Used in puppet/etc_puppet_conf.erb.
+# [*port*]
+#   The port you would like to connet ssh through.
+#   Default: 22
+#   Optional: yes
+#
+# [*rsa_authentication*]
+#   The value to set for RSAAuthentication in sshd configuration.
+#   Default: 'yes'
+#   Optional: yes
+#
+# [*pub_key_authentication*]
+#   The value to set for PubkeyAuthentication on sshd configuration.
+#   Default: 'yes'
+#   Optional: yes
+#
+# [*authorized_keys_file*]
+#   The name that should be used for the authorized keys file.
+#   Default: 'authorized_keys2'
+#   Optional: yes
+#
+# [*authorized_keys_parent*]
+#   The parent directory of the authorized keys file.  Should not end in /
+#   Default: '/root/.ssh'
+#   Optional: yes
+#
+# [*authorized_keys*]
+#   An array of authorized keys to add to the authorized keys file.
+#   Default: []
+#   Optional: no
 #
 # === Examples
 #
 #  class { 'ssh::config' :
-#    conf => {
-#      'port' => 22
-#    }
+#    port => '1234',
+#    rsa_authentication => 'yes',
+#    pub_key_authentication => 'yes',
+#    authorized_keys_file => 'authorized_keys2',
+#    authorized_keys_parent => '/root/.ssh',
+#    authorized_keys => [$key1, $key2, $key3],
 #  }
 #
-#
+
 class ssh::config(
   $port = 22,
   $rsa_authentication = 'yes',
   $pub_key_authentication = 'yes',
-  $authorized_keys_file = '.ssh/authorized_keys',
-  $authorized_keys = {}
+  $authorized_keys_file = 'authorized_keys2',
+  $authorized_keys_parent = '/root/.ssh',
+  $authorized_keys = [],
 ) inherits ssh::params {
 
   file { $ssh::params::ssh_server_config:
@@ -36,14 +68,14 @@ class ssh::config(
     notify => Class["ssh::service"],
   }
 
-  file { "/root/.ssh":
+  file { $authorized_keys_parent:
     ensure => "directory",
     mode    => 700,
     owner   => root,
     group   => root,
   }
 
-  file { $ssh::params::ssh_authorized_keys:
+  file { "${authorized_keys_parent}/${authorized_keys_file}":
     ensure  => present,
     mode    => 600,
     owner   => root,

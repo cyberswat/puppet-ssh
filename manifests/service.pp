@@ -4,8 +4,8 @@
 #
 # === Parameters
 #
-# [*puppet_server_service*]
-#   The name of the registered puppet master service.
+# [*ssh_server_service*]
+#   The name of the registered ssh server service.
 #
 class ssh::service inherits ssh::params {
   service { $ssh::params::ssh_server_service:
